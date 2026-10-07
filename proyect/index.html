@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="KOVARE - El mejor menú de hamburguesas, lonches, gorditas y antojitos" />
+    <meta name="author" content="KOVARE" />
+    <title>KOVARE | Menú y Pedidos</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Google Fonts & Bootstrap Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Core CSS (Bootstrap + Estilos Personalizados) -->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-kovare sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold" href="index.html">
+                <img src="assets/img/logo.jpg" alt="KOVARE Logo" width="35" height="35" class="d-inline-block align-text-top me-2"> KOVARE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarKovare" aria-controls="navbarKovare" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarKovare">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="index.html"><i class="bi bi-house-door me-1"></i> Inicio</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical me-1"></i> Menú y Más
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="menuDropdown">
+                            <li><a class="dropdown-link dropdown-item" href="#menu-seccion"><i class="bi bi-journal-text me-2"></i> Ver Menú</a></li>
+                            <li><a class="dropdown-link dropdown-item" href="nosotros.html"><i class="bi bi-people me-2"></i> Nosotros</a></li>
+                            <li><a class="dropdown-link dropdown-item" href="ayuda.html"><i class="bi bi-question-circle me-2"></i> Ayuda / FAQ</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                        <i class="bi bi-person-circle me-1"></i> Entrar
+                    </button>
+                    <button class="btn btn-kovare-mustard position-relative" data-bs-toggle="modal" data-bs-target="#modalCarrito">
+                        <i class="bi bi-cart-fill me-1"></i> Carrito
+                        <span id="cant-carrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Encabezado Principal (Hero Section) -->
+    <header class="masthead-kovare text-center">
+        <div class="container">
+            <h1 class="display-3 fw-bold text-warning mb-3">¡Bienvenido a KOVARE!</h1>
+            <p class="lead mb-4 fs-4 text-light">El sabor auténtico de hamburguesas, lonches, gorditas e irresistibles antojitos mexicanos.</p>
+            <a href="#menu-seccion" class="btn btn-kovare-mustard btn-lg shadow"><i class="bi bi-card-checklist me-2"></i>Ver Menú Completo</a>
+        </div>
+    </header>
+
+    <!-- Sección del Menú -->
+    <section id="menu-seccion" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold fs-1">NUESTRO MENÚ</h2>
+                <div class="d-flex justify-content-center">
+                    <div style="width: 80px; height: 4px; background-color: var(--kovare-mustard); border-radius: 2px;"></div>
+                </div>
+            </div>
+
+            <!-- Filtros de Categorías -->
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                <button class="btn btn-outline-dark active" onclick="filtrarCategoria('todos')">Todos</button>
+                <button class="btn btn-outline-dark" onclick="filtrarCategoria('hamburguesas')">Hamburguesas</button>
+                <button class="btn btn-outline-dark" onclick="filtrarCategoria('hotdogs')">Hot Dogs</button>
+                <button class="btn btn-outline-dark" onclick="filtrarCategoria('lonches')">Lonches</button>
+                <button class="btn btn-outline-dark" onclick="filtrarCategoria('antojitos')">Antojitos</button>
+                <button class="btn btn-outline-dark" onclick="filtrarCategoria('papas')">Papas & Boneless</button>
+                <button class="btn btn-outline-dark" onclick="filtrarCategoria('bebidas')">Bebidas</button>
+            </div>
+
+            <!-- Contenedor Dinámico de Productos -->
+            <div class="row" id="contenedor-productos">
+                <!-- Se llena mediante js/main.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Carrito -->
+    <div class="modal fade" id="modalCarrito" tabindex="-1" aria-labelledby="modalCarritoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="modalCarritoLabel"><i class="bi bi-cart3 me-2"></i>Tu Carrito de Compra</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush mb-3" id="lista-carrito">
+                        <!-- Lista de items agregados -->
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top fs-5 fw-bold">
+                        <span>Total:</span>
+                        <span id="total-carrito" class="text-success">$0 MXN</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
+                    <button type="button" class="btn btn-kovare-green"><i class="bi bi-whatsapp me-1"></i> Pedir por WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalle del Producto -->
+    <div class="modal fade" id="modalProducto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="modalProdTitulo">Detalle del Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalProdImg" src="" class="img-fluid rounded mb-3" style="max-height: 250px; object-fit: cover;" alt="Producto">
+                    <p id="modalProdDesc" class="text-muted"></p>
+                    <h3 id="modalProdPrecio" class="text-dark fw-bold mb-3"></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="modalProdBtnAgregar" class="btn btn-kovare-mustard"><i class="bi bi-cart-plus me-1"></i> Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- AQUÍ PEGAS EL FORMULARIO DE ENTRAR -->
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Entrar a KOVARE</h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar">
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="formLogin" novalidate>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+
+                        <input type="text"
+                               class="form-control"
+                               id="nombre">
+
+                        <div class="invalid-feedback">
+                            Escribe tu nombre.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo electrónico</label>
+
+                        <input type="email"
+                               class="form-control"
+                               id="correo">
+
+                        <div class="invalid-feedback">
+                            Escribe un correo válido.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edad" class="form-label">Edad</label>
+
+                        <input type="number"
+                               class="form-control"
+                               id="edad"
+                               min="18">
+
+                        <div class="invalid-feedback">
+                            Debes tener al menos 18 años.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipoUsuario" class="form-label">Tipo de usuario</label>
+
+                        <select class="form-select" id="tipoUsuario">
+                            <option value="">Selecciona una opción</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="administrador">Administrador</option>
+                        </select>
+
+                        <div class="invalid-feedback">
+                            Selecciona un tipo de usuario.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+
+                        <input type="password"
+                               class="form-control"
+                               id="password">
+
+                        <div class="invalid-feedback">
+                            La contraseña debe tener mínimo 6 caracteres.
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-3">
+
+                        <input class="form-check-input"
+                               type="checkbox"
+                               id="terminos">
+
+                        <label class="form-check-label" for="terminos">
+                            Acepto los términos y condiciones
+                        </label>
+
+                        <div class="invalid-feedback">
+                            Debes aceptar los términos.
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+                        Iniciar sesión
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p class="mb-1">&copy; 2026 KOVARE - Todos los derechos reservados.</p>
+            <small class="text-muted">¡El sabor que te enamora!</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS + Scripts Propios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
